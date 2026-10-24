@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['brand_id', 'category_id', 'name', 'sku', 'description', 'images', 'price', 'stock', 'is_active'])]
+#[Fillable(['brand_id', 'category_id', 'name', 'sku', 'description', 'badge', 'activity', 'color', 'sizes', 'images', 'price', 'stock', 'is_active'])]
 class Product extends Model
 {
     use SoftDeletes;
@@ -16,6 +16,7 @@ class Product extends Model
     {
         return [
             'images' => 'array',
+            'sizes' => 'array',
             'price' => 'decimal:2',
             'stock' => 'integer',
             'is_active' => 'boolean',
