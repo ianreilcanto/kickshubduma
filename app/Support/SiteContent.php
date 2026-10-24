@@ -34,8 +34,103 @@ class SiteContent
         return match ($page) {
             'home' => static::home(),
             'about' => static::about(),
+            'products' => static::products(),
+            'athletes' => static::athletes(),
             default => [],
         };
+    }
+
+    private static function products(): array
+    {
+        return [
+            'announcement_title' => 'DUMAGUETE ROOTS. EVERYDAY MOVEMENT.',
+            'announcement_text' => 'Free PH shipping on orders ₱5,000+ · Find your next pair →',
+            'intro_eyebrow' => 'THE KICKS HUB DUMA STORE',
+            'intro_title' => "FIND YOUR\nNEXT MOVE.",
+            'intro_subtitle' => "Fresh pairs. Better rallies. Your next go-to kit.\nConsidered gear for every version of your game.",
+            'art_stamp_main' => 'GAME',
+            'art_note' => 'COURT / STREET / EVERYDAY',
+            'filter_note_title' => 'Made for your game.',
+            'filter_note_text' => 'Need help with fit or gear? Our local crew can help you find your pair.',
+            'catalogue_footer' => 'Showing a curated edit of the Kicks Hub Duma store',
+            'empty_title' => 'No gear found.',
+            'empty_text' => 'Try changing your filters or searching another term.',
+            'help_eyebrow' => 'LOCAL KNOW-HOW. BETTER FIT.',
+            'help_title' => "GOOD GEAR STARTS\nWITH A GOOD FIT.",
+            'help_text' => 'Not sure what works for your game? Get advice from people who play here, too.',
+            'help_button' => 'TALK TO THE CREW',
+            'contact_email' => 'hello@kickshubduma.example',
+            'footer_copyright' => '© 2026 Kicks Hub Duma. Made for the local game.',
+        ];
+    }
+
+    private static function athletes(): array
+    {
+        return [
+            'announcement_title' => 'DUMAGUETE ROOTS. EVERYDAY MOVEMENT.',
+            'announcement_text' => 'Free PH shipping on orders ₱5,000+ · Find your next pair →',
+            'intro_eyebrow' => 'THE PEOPLE BEHIND THE MOVEMENT',
+            'intro_title' => "DIFFERENT GAMES.\nSAME LOCAL SOUL.",
+            'intro_text' => 'Not just podiums and personal bests. We celebrate the people who lace up, show up, and bring a little more heart to the game.',
+            'intro_link' => 'MEET THE DUMA CREW',
+            'disclosure' => 'CONCEPT ROSTER — Fictional athletes and original portraits, created to tell our story. No real-world endorsements.',
+            'show_disclosure' => true,
+            'crew_eyebrow' => 'OUR ATHLETES / OUR EVERYDAY INSPIRATION',
+            'crew_title' => 'GOOD COMPANY. GREAT ENERGY.',
+            'crew_note' => 'Three stories. One shared spirit.',
+            'routine_eyebrow' => 'BEHIND THE ROUTINE',
+            'routine_title' => "SHOW UP.\nPUT IN THE WORK.\nDO IT AGAIN.",
+            'routine_text' => 'Every athlete has a rhythm. Small habits, repeated daily, make room for big moments.',
+            'rituals' => [
+                ['time' => '05:30', 'title' => 'Start before the noise', 'text' => 'Quiet streets, a clear head, and a few miles to find your pace.'],
+                ['time' => '16:00', 'title' => 'Put in the reps', 'text' => 'Work on the basics. Keep it simple. Keep getting better.'],
+                ['time' => '18:30', 'title' => 'Play with your people', 'text' => 'Meet the crew, share the court, and make the day count.'],
+            ],
+            'gear_eyebrow' => 'PICKS FROM THE CREW',
+            'gear_title' => 'GEAR THAT GETS OUT THERE.',
+            'gear_button' => 'SHOP ALL GEAR',
+            'gear_limit' => 3,
+            'categories_eyebrow' => 'FIND YOUR NEXT PAIR',
+            'categories_title' => 'MADE FOR YOUR KIND OF MOVE.',
+            'categories_note' => 'Find your game. Find your fit.',
+            'category_cards' => [
+                ['tag' => '01 / COURT COLLECTION', 'title' => "COURT\nREADY."],
+                ['tag' => '02 / RUN COLLECTION', 'title' => "FIND\nYOUR PACE."],
+                ['tag' => '03 / EVERYDAY', 'title' => "MOVE\nYOUR WAY."],
+            ],
+            'spotlight_eyebrow' => 'MORE THAN A PAIR OF SHOES',
+            'spotlight_title' => "BUILT FOR THE\nONES WHO SHOW UP.",
+            'spotlight_text' => 'We’re here for the early starts, the last-minute games, and the people who make every session worth it.',
+            'spotlight_identity' => 'KICKS HUB DUMA',
+            'spotlight_identity_sub' => 'LOCAL MOVEMENT. SHARED ENERGY.',
+            'spotlight_button' => 'OUR STORY',
+            'kit_eyebrow' => 'THE EVERYDAY KIT',
+            'kit_title' => "YOUR NEXT\nSESSION STARTS HERE.",
+            'kit_text' => 'Good gear won’t do the work for you. But it can help you show up ready.',
+            'kit_button' => 'EXPLORE THE KIT',
+            'kit_art' => 'TRAIN / PLAY / REPEAT',
+            'local_mark' => 'ROOTED HERE. READY TO MOVE.',
+            'local_eyebrow' => 'OUR LOCAL STORY',
+            'local_title' => "A LITTLE LOCAL PRIDE.\nA LOT OF LOVE FOR THE GAME.",
+            'local_text' => 'Kicks Hub Duma is inspired by the energy of Dumaguete — a place where community comes together through sport, movement, and everyday moments.',
+            'local_button' => 'BE PART OF THE CLUB',
+            'fit_title' => 'Not sure about your fit?',
+            'fit_text' => 'Find your size and get ready to move comfortably.',
+            'fit_button' => 'FIND YOUR FIT',
+            'journal_eyebrow' => 'FIELD NOTES / FROM THE CLUB',
+            'journal_title' => 'GOOD GAMES. GOOD STORIES.',
+            'journal_link' => 'READ ALL STORIES',
+            'journal' => [
+                ['tag' => 'COMMUNITY / 4 MIN READ', 'title' => 'Why showing up is the real win', 'text' => 'The small rituals that make movement stick.'],
+                ['tag' => 'TRAINING / 5 MIN READ', 'title' => 'Build a routine you can keep', 'text' => 'Progress starts with the basics.'],
+                ['tag' => 'LOCAL LIFE / 3 MIN READ', 'title' => 'Meet you at the court', 'text' => 'It’s always better when we play together.'],
+            ],
+            'newsletter_eyebrow' => 'JOIN THE CLUB',
+            'newsletter_title' => 'GOOD THINGS MOVE TOGETHER.',
+            'newsletter_text' => 'Get new drops, local stories, and club updates in your inbox.',
+            'newsletter_fine_print' => 'By signing up, you agree to receive occasional updates from Kicks Hub Duma.',
+            'footer_copyright' => '© 2026 Kicks Hub Duma. Concept storefront.',
+        ];
     }
 
     private static function home(): array

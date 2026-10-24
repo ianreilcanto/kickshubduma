@@ -12,8 +12,8 @@
 </head>
 <body>
   <div class="announcement">
-    <span>DUMAGUETE ROOTS. EVERYDAY MOVEMENT.</span>
-    <span>Free PH shipping on orders ₱5,000+ <b>·</b> Find your next pair →</span>
+    <span>{{ $c['announcement_title'] }}</span>
+    <span>{{ $c['announcement_text'] }}</span>
   </div>
   <header class="site-header">
     <a class="brand" href="{{ route('home') }}" aria-label="Kicks Hub Duma home">
@@ -35,14 +35,14 @@
     <section class="intro">
       <div class="intro-copy">
         <div class="breadcrumb"><a href="{{ route('home') }}">Home</a><span>/</span><strong>Products</strong></div>
-        <p class="eyebrow">THE KICKS HUB DUMA STORE</p>
-        <h1>FIND YOUR<br>NEXT MOVE.</h1>
-        <p class="intro-subtitle">Fresh pairs. Better rallies. Your next go-to kit.<br>Considered gear for every version of your game.</p>
+        <p class="eyebrow">{{ $c['intro_eyebrow'] }}</p>
+        <h1>{!! nl2br(e($c['intro_title'])) !!}</h1>
+        <p class="intro-subtitle">{!! nl2br(e($c['intro_subtitle'])) !!}</p>
       </div>
       <div class="intro-art" aria-label="Editorial sneaker artwork">
-        <div class="art-stamp">LOCAL<br><strong>GAME</strong><br>SUPPLY</div>
+        <div class="art-stamp">LOCAL<br><strong>{{ $c['art_stamp_main'] }}</strong><br>SUPPLY</div>
         <div class="shoe shoe-large"><span class="shoe-sole"></span><span class="shoe-upper"></span><span class="shoe-detail"></span><span class="shoe-laces"></span></div>
-        <span class="art-note">COURT / STREET / EVERYDAY</span>
+        <span class="art-note">{{ $c['art_note'] }}</span>
       </div>
     </section>
 
@@ -75,7 +75,7 @@
           <input id="priceRange" type="range" min="1000" max="{{ $maxPrice }}" step="250" value="{{ $maxPrice }}">
           <p class="range-value">Up to <strong id="priceValue">₱{{ number_format($maxPrice) }}</strong></p>
         </div>
-        <div class="filter-note"><span class="filter-note-icon">✳</span><p><strong>Made for your game.</strong><br>Need help with fit or gear? Our local crew can help you find your pair.</p></div>
+        <div class="filter-note"><span class="filter-note-icon">✳</span><p><strong>{{ $c['filter_note_title'] }}</strong><br>{{ $c['filter_note_text'] }}</p></div>
       </aside>
 
       <div class="product-area">
@@ -93,12 +93,12 @@
           </article>
           @endforeach
         </div>
-        <div class="empty-state" id="emptyState" hidden><span>✳</span><h3>No gear found.</h3><p>Try changing your filters or searching another term.</p><button id="emptyReset">Clear filters</button></div>
-        <div class="catalogue-footer"><span>Showing a curated edit of the Kicks Hub Duma store</span><button id="loadMore">LOAD MORE PRODUCTS <span>＋</span></button></div>
+        <div class="empty-state" id="emptyState" hidden><span>✳</span><h3>{{ $c['empty_title'] }}</h3><p>{{ $c['empty_text'] }}</p><button id="emptyReset">Clear filters</button></div>
+        <div class="catalogue-footer"><span>{{ $c['catalogue_footer'] }}</span><button id="loadMore">LOAD MORE PRODUCTS <span>＋</span></button></div>
       </div>
     </section>
 
-    <section class="help-banner" id="about"><div class="help-symbol">KHD<br><span>✳</span></div><div><p class="eyebrow">LOCAL KNOW-HOW. BETTER FIT.</p><h2>GOOD GEAR STARTS<br>WITH A GOOD FIT.</h2><p>Not sure what works for your game? Get advice from people who play here, too.</p></div><a href="mailto:hello@kickshubduma.example" class="button-light">TALK TO THE CREW <span>↗</span></a></section>
+    <section class="help-banner" id="about"><div class="help-symbol">KHD<br><span>✳</span></div><div><p class="eyebrow">{{ $c['help_eyebrow'] }}</p><h2>{!! nl2br(e($c['help_title'])) !!}</h2><p>{{ $c['help_text'] }}</p></div><a href="mailto:{{ $c['contact_email'] }}" class="button-light">{{ $c['help_button'] }} <span>↗</span></a></section>
   </main>
 
   <footer class="site-footer">
@@ -107,7 +107,7 @@
       <div class="footer-column"><h4>NEED A HAND?</h4><a href="#">Size guide</a><a href="#">Shipping & returns</a><a href="#">FAQs</a><a href="mailto:hello@kickshubduma.example">Contact us</a></div>
       <div class="footer-column"><h4>THE CLUB</h4><a href="{{ route('about') }}">Our story</a><a href="{{ route('athletes') }}">Our athletes</a><a href="#">Community</a><a href="#">Journal</a></div>
     </div>
-    <div class="footer-bottom"><span>© 2026 Kicks Hub Duma. Made for the local game.</span><span>Privacy · Terms · Payments</span><span>PHILIPPINES · PHP ₱</span></div>
+    <div class="footer-bottom"><span>{{ $c['footer_copyright'] }}</span><span>Privacy · Terms · Payments</span><span>PHILIPPINES · PHP ₱</span></div>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="{{ asset('site/products/script.js') }}"></script>

@@ -30,6 +30,7 @@ class SiteController extends Controller
         $products = Product::with('category')->where('is_active', true)->orderBy('id')->get();
 
         return view('site.products', [
+            'c' => SiteContent::get('products'),
             'products' => $products,
             'categories' => Category::query()->where('is_visible', true)->orderBy('id')->get()
                 ->each(fn ($c) => $c->shown_count = $products->where('category_id', $c->id)->count()),
@@ -43,11 +44,14 @@ class SiteController extends Controller
     {
         $athletes = Athlete::active()->with('goToProduct')->get();
 
+        $content = SiteContent::get('athletes');
+
         return view('site.athletes', [
+            'c' => $content,
             'athletes' => $athletes,
             'featured' => $athletes->firstWhere('is_featured', true) ?? $athletes->first(),
             'sports' => $athletes->pluck('sport')->unique()->values(),
-            'products' => Product::where('is_active', true)->latest('id')->take(3)->get(),
+            'products' => Product::where('is_active', true)->latest('id')->take(max(1, (int) $content['gear_limit']))->get(),
         ]);
     }
 }

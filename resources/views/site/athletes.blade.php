@@ -12,8 +12,8 @@
 </head>
 <body>
   <div class="announcement">
-    <strong>DUMAGUETE ROOTS. EVERYDAY MOVEMENT.</strong>
-    <span>Free PH shipping on orders ₱5,000+ &nbsp;·&nbsp; Find your next pair →</span>
+    <strong>{{ $c['announcement_title'] }}</strong>
+    <span>{{ $c['announcement_text'] }}</span>
   </div>
 
   <header class="site-header">
@@ -36,16 +36,18 @@
     <section class="intro section-pad" id="athletes">
       <div class="intro-title">
         <p class="breadcrumb">Home / Our Athletes</p>
-        <p class="eyebrow">THE PEOPLE BEHIND THE MOVEMENT</p>
-        <h1>DIFFERENT GAMES.<br>SAME LOCAL SOUL.</h1>
+        <p class="eyebrow">{{ $c['intro_eyebrow'] }}</p>
+        <h1>{!! nl2br(e($c['intro_title'])) !!}</h1>
       </div>
       <div class="intro-copy">
-        <p>Not just podiums and personal bests. We celebrate the people who lace up, show up, and bring a little more heart to the game.</p>
-        <a class="text-link" href="#crew">MEET THE DUMA CREW ↓</a>
+        <p>{{ $c['intro_text'] }}</p>
+        <a class="text-link" href="#crew">{{ $c['intro_link'] }} ↓</a>
       </div>
     </section>
 
-    <div class="disclosure"><span class="info-icon">i</span> CONCEPT ROSTER — Fictional athletes and original portraits, created to tell our story. No real-world endorsements.</div>
+    @if ($c['show_disclosure'])
+    <div class="disclosure"><span class="info-icon">i</span> {{ $c['disclosure'] }}</div>
+    @endif
 
     @if ($featured)
     <section class="featured">
@@ -70,8 +72,8 @@
 
     <section class="crew section-pad" id="crew">
       <div class="section-heading">
-        <div><p class="eyebrow">OUR ATHLETES / OUR EVERYDAY INSPIRATION</p><h2>GOOD COMPANY. GREAT ENERGY.</h2></div>
-        <p class="muted heading-note">Three stories. One shared spirit.</p>
+        <div><p class="eyebrow">{{ $c['crew_eyebrow'] }}</p><h2>{{ $c['crew_title'] }}</h2></div>
+        <p class="muted heading-note">{{ $c['crew_note'] }}</p>
       </div>
       <div class="filters" role="group" aria-label="Filter athletes">
         <button class="filter active" data-filter="all">All athletes</button>
@@ -91,18 +93,18 @@
     </section>
 
     <section class="routine section-pad">
-      <div class="routine-intro"><p class="eyebrow">BEHIND THE ROUTINE</p><h2>SHOW UP.<br>PUT IN THE WORK.<br>DO IT AGAIN.</h2><p class="body-copy">Every athlete has a rhythm. Small habits, repeated daily, make room for big moments.</p></div>
+      <div class="routine-intro"><p class="eyebrow">{{ $c['routine_eyebrow'] }}</p><h2>{!! nl2br(e($c['routine_title'])) !!}</h2><p class="body-copy">{{ $c['routine_text'] }}</p></div>
       <div class="rituals">
-        <article><span class="time">05:30</span><div><h3>Start before the noise</h3><p>Quiet streets, a clear head, and a few miles to find your pace.</p></div></article>
-        <article><span class="time">16:00</span><div><h3>Put in the reps</h3><p>Work on the basics. Keep it simple. Keep getting better.</p></div></article>
-        <article><span class="time">18:30</span><div><h3>Play with your people</h3><p>Meet the crew, share the court, and make the day count.</p></div></article>
+        @foreach ($c['rituals'] as $ritual)
+        <article><span class="time">{{ $ritual['time'] }}</span><div><h3>{{ $ritual['title'] }}</h3><p>{{ $ritual['text'] }}</p></div></article>
+        @endforeach
       </div>
     </section>
 
     <section class="gear section-pad" id="products">
       <div class="section-heading">
-        <div><p class="eyebrow">PICKS FROM THE CREW</p><h2>GEAR THAT GETS OUT THERE.</h2></div>
-        <a class="button button-outline" href="{{ route('products') }}">SHOP ALL GEAR <span>↗</span></a>
+        <div><p class="eyebrow">{{ $c['gear_eyebrow'] }}</p><h2>{{ $c['gear_title'] }}</h2></div>
+        <a class="button button-outline" href="{{ route('products') }}">{{ $c['gear_button'] }} <span>↗</span></a>
       </div>
       <div class="product-grid">
         @foreach ($products as $product)
@@ -116,43 +118,43 @@
     </section>
 
     <section class="categories section-pad" id="categories">
-      <div class="section-heading"><div><p class="eyebrow">FIND YOUR NEXT PAIR</p><h2>MADE FOR YOUR KIND OF MOVE.</h2></div><p class="muted heading-note">Find your game. Find your fit.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">{{ $c['categories_eyebrow'] }}</p><h2>{{ $c['categories_title'] }}</h2></div><p class="muted heading-note">{{ $c['categories_note'] }}</p></div>
       <div class="category-grid">
-        <a href="{{ route('products') }}" class="category category-large"><span class="category-count">01 / COURT COLLECTION</span><strong>COURT<br>READY.</strong><span class="category-arrow">↗</span></a>
-        <a href="{{ route('products') }}" class="category category-run"><span class="category-count">02 / RUN COLLECTION</span><strong>FIND<br>YOUR PACE.</strong><span class="category-arrow">↗</span></a>
-        <a href="{{ route('products') }}" class="category category-life"><span class="category-count">03 / EVERYDAY</span><strong>MOVE<br>YOUR WAY.</strong><span class="category-arrow">↗</span></a>
+        @foreach ($c['category_cards'] as $card)
+        <a href="{{ route('products') }}" class="category {{ ['category-large', 'category-run', 'category-life'][$loop->index % 3] }}"><span class="category-count">{{ $card['tag'] }}</span><strong>{!! nl2br(e($card['title'])) !!}</strong><span class="category-arrow">↗</span></a>
+        @endforeach
       </div>
     </section>
 
     <section class="spotlight">
       <div class="spotlight-art"><span class="portrait-label">LOCAL STORIES / DUMA</span><div class="portrait-silhouette"><span>KH</span></div></div>
-      <div class="spotlight-copy"><p class="eyebrow">MORE THAN A PAIR OF SHOES</p><h2>BUILT FOR THE<br>ONES WHO SHOW UP.</h2><p class="body-copy">We’re here for the early starts, the last-minute games, and the people who make every session worth it.</p><div class="identity"><strong>KICKS HUB DUMA</strong><small>LOCAL MOVEMENT. SHARED ENERGY.</small></div><a class="button button-red" href="{{ route('about') }}">OUR STORY <span>↗</span></a><small class="concept-note">Concept brand page — sample content for layout demonstration.</small></div>
+      <div class="spotlight-copy"><p class="eyebrow">{{ $c['spotlight_eyebrow'] }}</p><h2>{!! nl2br(e($c['spotlight_title'])) !!}</h2><p class="body-copy">{{ $c['spotlight_text'] }}</p><div class="identity"><strong>{{ $c['spotlight_identity'] }}</strong><small>{{ $c['spotlight_identity_sub'] }}</small></div><a class="button button-red" href="{{ route('about') }}">{{ $c['spotlight_button'] }} <span>↗</span></a><small class="concept-note">Concept brand page — sample content for layout demonstration.</small></div>
     </section>
 
     <section class="training-kit">
-      <div class="training-copy"><p class="eyebrow">THE EVERYDAY KIT</p><h2>YOUR NEXT<br>SESSION STARTS HERE.</h2><p class="body-copy">Good gear won’t do the work for you. But it can help you show up ready.</p><a class="button button-outline" href="#products">EXPLORE THE KIT <span>↗</span></a></div>
-      <div class="training-art" role="img" aria-label="Abstract sports gear illustration"><span>TRAIN / PLAY / REPEAT</span></div>
+      <div class="training-copy"><p class="eyebrow">{{ $c['kit_eyebrow'] }}</p><h2>{!! nl2br(e($c['kit_title'])) !!}</h2><p class="body-copy">{{ $c['kit_text'] }}</p><a class="button button-outline" href="#products">{{ $c['kit_button'] }} <span>↗</span></a></div>
+      <div class="training-art" role="img" aria-label="Abstract sports gear illustration"><span>{{ $c['kit_art'] }}</span></div>
     </section>
 
     <section class="local-story section-pad" id="about">
-      <div class="heritage-mark"><div class="brand-mark large"><span>KH</span><small>DUMA</small></div><p>ROOTED HERE. READY TO MOVE.</p></div>
-      <div class="local-copy"><p class="eyebrow">OUR LOCAL STORY</p><h2>A LITTLE LOCAL PRIDE.<br>A LOT OF LOVE FOR THE GAME.</h2><p class="body-copy">Kicks Hub Duma is inspired by the energy of Dumaguete — a place where community comes together through sport, movement, and everyday moments.</p><a class="button button-red" href="#newsletter">BE PART OF THE CLUB <span>↗</span></a></div>
+      <div class="heritage-mark"><div class="brand-mark large"><span>KH</span><small>DUMA</small></div><p>{{ $c['local_mark'] }}</p></div>
+      <div class="local-copy"><p class="eyebrow">{{ $c['local_eyebrow'] }}</p><h2>{!! nl2br(e($c['local_title'])) !!}</h2><p class="body-copy">{{ $c['local_text'] }}</p><a class="button button-red" href="#newsletter">{{ $c['local_button'] }} <span>↗</span></a></div>
     </section>
 
-    <section class="fit-guide section-pad"><div class="fit-icon">↔</div><div><h3>Not sure about your fit?</h3><p>Find your size and get ready to move comfortably.</p></div><a class="button button-outline" href="#products">FIND YOUR FIT <span>↗</span></a></section>
+    <section class="fit-guide section-pad"><div class="fit-icon">↔</div><div><h3>{{ $c['fit_title'] }}</h3><p>{{ $c['fit_text'] }}</p></div><a class="button button-outline" href="#products">{{ $c['fit_button'] }} <span>↗</span></a></section>
 
     <section class="journal section-pad">
-      <div class="section-heading"><div><p class="eyebrow">FIELD NOTES / FROM THE CLUB</p><h2>GOOD GAMES. GOOD STORIES.</h2></div><a class="text-link" href="#journal">READ ALL STORIES ↗</a></div>
+      <div class="section-heading"><div><p class="eyebrow">{{ $c['journal_eyebrow'] }}</p><h2>{{ $c['journal_title'] }}</h2></div><a class="text-link" href="#journal">{{ $c['journal_link'] }} ↗</a></div>
       <div class="journal-grid" id="journal">
-        <article><div class="journal-art journal-one"></div><p class="eyebrow">COMMUNITY / 4 MIN READ</p><h3>Why showing up is the real win <span>↗</span></h3><p class="muted">The small rituals that make movement stick.</p></article>
-        <article><div class="journal-art journal-two"></div><p class="eyebrow">TRAINING / 5 MIN READ</p><h3>Build a routine you can keep <span>↗</span></h3><p class="muted">Progress starts with the basics.</p></article>
-        <article><div class="journal-art journal-three"></div><p class="eyebrow">LOCAL LIFE / 3 MIN READ</p><h3>Meet you at the court <span>↗</span></h3><p class="muted">It’s always better when we play together.</p></article>
+        @foreach ($c['journal'] as $story)
+        <article><div class="journal-art {{ ['journal-one', 'journal-two', 'journal-three'][$loop->index % 3] }}"></div><p class="eyebrow">{{ $story['tag'] }}</p><h3>{{ $story['title'] }} <span>↗</span></h3><p class="muted">{{ $story['text'] }}</p></article>
+        @endforeach
       </div>
     </section>
 
     <section class="newsletter section-pad" id="newsletter">
-      <div><p class="eyebrow">JOIN THE CLUB</p><h2>GOOD THINGS MOVE TOGETHER.</h2><p>Get new drops, local stories, and club updates in your inbox.</p></div>
-      <form id="newsletter-form"><div class="email-row"><label class="sr-only" for="email">Your email address</label><input id="email" type="email" placeholder="Your email address" required><button type="submit">SIGN ME UP ↗</button></div><small id="form-message">By signing up, you agree to receive occasional updates from Kicks Hub Duma.</small></form>
+      <div><p class="eyebrow">{{ $c['newsletter_eyebrow'] }}</p><h2>{{ $c['newsletter_title'] }}</h2><p>{{ $c['newsletter_text'] }}</p></div>
+      <form id="newsletter-form"><div class="email-row"><label class="sr-only" for="email">Your email address</label><input id="email" type="email" placeholder="Your email address" required><button type="submit">SIGN ME UP ↗</button></div><small id="form-message">{{ $c['newsletter_fine_print'] }}</small></form>
     </section>
   </main>
 
@@ -163,7 +165,7 @@
       <div class="footer-links"><h4>THE CLUB</h4><a href="{{ route('about') }}">Our story</a><a href="{{ route('athletes') }}">Our athletes</a><a href="#journal">Field notes</a><a href="#newsletter">Join the club</a></div>
       <div class="footer-links"><h4>NEED HELP?</h4><a href="#fit">Size guide</a><a href="#shipping">Shipping</a><a href="#returns">Returns</a><a href="#contact">Contact us</a></div>
     </div>
-    <div class="footer-legal"><span>© 2026 Kicks Hub Duma. Concept storefront.</span><span>Privacy &nbsp; · &nbsp; Terms &nbsp; · &nbsp; Shipping policy</span><span>Made for movement in Dumaguete, PH.</span></div>
+    <div class="footer-legal"><span>{{ $c['footer_copyright'] }}</span><span>Privacy &nbsp; · &nbsp; Terms &nbsp; · &nbsp; Shipping policy</span><span>Made for movement in Dumaguete, PH.</span></div>
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="{{ asset('site/athletes/script.js') }}"></script>
