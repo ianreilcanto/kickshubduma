@@ -5,20 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Athlete;
 use App\Models\Category;
 use App\Models\Product;
+use App\Support\SiteContent;
 
 class SiteController extends Controller
 {
     public function home()
     {
+        $content = SiteContent::get('home');
+
         return view('site.home', [
+            'c' => $content,
             'categories' => Category::query()->where('is_visible', true)->orderBy('id')->get(),
-            'products' => Product::with('category')->where('is_active', true)->latest('id')->take(4)->get(),
+            'products' => Product::with('category')->where('is_active', true)->latest('id')->take(max(1, (int) $content['products_limit']))->get(),
         ]);
     }
 
     public function about()
     {
-        return view('site.about');
+        return view('site.about', ['c' => SiteContent::get('about')]);
     }
 
     public function products()
