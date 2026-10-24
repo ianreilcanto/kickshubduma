@@ -79,6 +79,7 @@ class ManageAthletesPage extends ManagePageContent
                 Textarea::make('spotlight_text')->label('Text')->rows(2),
                 TextInput::make('spotlight_identity')->label('Identity'),
                 TextInput::make('spotlight_identity_sub')->label('Identity subtitle'),
+                static::imageUpload('spotlight_image', 'Spotlight photo')->columnSpanFull(),
             ]),
             Section::make('Everyday kit')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('kit_eyebrow')->label('Eyebrow'),
@@ -86,6 +87,7 @@ class ManageAthletesPage extends ManagePageContent
                 Textarea::make('kit_title')->label('Title')->rows(2),
                 Textarea::make('kit_text')->label('Text')->rows(2),
                 TextInput::make('kit_art')->label('Art label')->columnSpanFull(),
+                static::imageUpload('kit_image', 'Kit photo')->columnSpanFull(),
             ]),
             Section::make('Local story')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('local_mark')->label('Mark caption'),
@@ -107,6 +109,7 @@ class ManageAthletesPage extends ManagePageContent
                     TextInput::make('tag')->required(),
                     TextInput::make('title')->required(),
                     TextInput::make('text')->required(),
+                    static::imageUpload('image', 'Story image')->columnSpanFull(),
                 ])->reorderable()->addActionLabel('Add story'),
             ]),
             Section::make('Newsletter')->columns(2)->collapsible()->collapsed()->schema([

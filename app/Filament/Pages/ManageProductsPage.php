@@ -38,6 +38,10 @@ class ManageProductsPage extends ManagePageContent
                 Textarea::make('intro_subtitle')->label('Subtitle')->rows(2),
                 TextInput::make('art_stamp_main')->label('Art stamp word'),
                 TextInput::make('art_note')->label('Art note'),
+                static::imageUpload('intro_image', 'Intro photo')->columnSpanFull(),
+            ]),
+            Section::make('Default product image')->collapsible()->schema([
+                static::imageUpload('default_product_image', 'Default product image', 'Shown on the storefront for any product without an uploaded image. Leave empty to use the built-in placeholder.'),
             ]),
             Section::make('Catalogue')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('filter_note_title')->label('Filter note title'),

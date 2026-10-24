@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('site/athletes/styles.css') }}">
+  <link rel="stylesheet" href="{{ asset('site/cms.css') }}">
 </head>
 <body>
   <div class="announcement">
@@ -109,7 +110,7 @@
       <div class="product-grid">
         @foreach ($products as $product)
         <article class="product-card">
-          <div class="product-art {{ ['shoe-art', 'runner-art', 'everyday-art'][$loop->index % 3] }}">@if ($product->badge)<span class="product-tag">{{ $product->badge }}</span>@endif<button class="heart" aria-label="Save {{ $product->name }}">♡</button>@if (! empty($product->images))<img src="{{ asset('storage/'.$product->images[0]) }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0">@else<div class="shoe-shape">{{ strtoupper(Str::of($product->name)->explode(' ')->first()) }}</div>@endif</div>
+          <div class="product-art {{ ['shoe-art', 'runner-art', 'everyday-art'][$loop->index % 3] }}">@if ($product->badge)<span class="product-tag">{{ $product->badge }}</span>@endif<button class="heart" aria-label="Save {{ $product->name }}">♡</button><img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"></div>
           <div class="product-meta"><div><h3>{{ $product->name }}</h3><p class="muted">{{ $product->description }}</p></div><strong>₱{{ number_format($product->price) }}</strong></div>
           <div class="product-bottom"><div class="swatches"><i></i><i></i><i></i></div><button class="quick-add" data-product="{{ $product->name }}">QUICK ADD ＋</button></div>
         </article>
@@ -127,13 +128,13 @@
     </section>
 
     <section class="spotlight">
-      <div class="spotlight-art"><span class="portrait-label">LOCAL STORIES / DUMA</span><div class="portrait-silhouette"><span>KH</span></div></div>
+      <div @class(['spotlight-art', 'has-cms-image' => $c['spotlight_image']])>@if ($c['spotlight_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['spotlight_image']) }}" alt="">@endif<span class="portrait-label">LOCAL STORIES / DUMA</span><div class="portrait-silhouette cms-hide"><span>KH</span></div></div>
       <div class="spotlight-copy"><p class="eyebrow">{{ $c['spotlight_eyebrow'] }}</p><h2>{!! nl2br(e($c['spotlight_title'])) !!}</h2><p class="body-copy">{{ $c['spotlight_text'] }}</p><div class="identity"><strong>{{ $c['spotlight_identity'] }}</strong><small>{{ $c['spotlight_identity_sub'] }}</small></div><a class="button button-red" href="{{ route('about') }}">{{ $c['spotlight_button'] }} <span>↗</span></a><small class="concept-note">Concept brand page — sample content for layout demonstration.</small></div>
     </section>
 
     <section class="training-kit">
       <div class="training-copy"><p class="eyebrow">{{ $c['kit_eyebrow'] }}</p><h2>{!! nl2br(e($c['kit_title'])) !!}</h2><p class="body-copy">{{ $c['kit_text'] }}</p><a class="button button-outline" href="#products">{{ $c['kit_button'] }} <span>↗</span></a></div>
-      <div class="training-art" role="img" aria-label="Abstract sports gear illustration"><span>{{ $c['kit_art'] }}</span></div>
+      <div @class(['training-art', 'has-cms-image' => $c['kit_image']]) role="img" aria-label="Abstract sports gear illustration">@if ($c['kit_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['kit_image']) }}" alt="">@endif<span>{{ $c['kit_art'] }}</span></div>
     </section>
 
     <section class="local-story section-pad" id="about">
@@ -147,7 +148,7 @@
       <div class="section-heading"><div><p class="eyebrow">{{ $c['journal_eyebrow'] }}</p><h2>{{ $c['journal_title'] }}</h2></div><a class="text-link" href="#journal">{{ $c['journal_link'] }} ↗</a></div>
       <div class="journal-grid" id="journal">
         @foreach ($c['journal'] as $story)
-        <article><div class="journal-art {{ ['journal-one', 'journal-two', 'journal-three'][$loop->index % 3] }}"></div><p class="eyebrow">{{ $story['tag'] }}</p><h3>{{ $story['title'] }} <span>↗</span></h3><p class="muted">{{ $story['text'] }}</p></article>
+        <article><div @class(['journal-art', ['journal-one', 'journal-two', 'journal-three'][$loop->index % 3] => empty($story['image']), 'has-cms-image' => ! empty($story['image'])])>@if (! empty($story['image']))<img class="cms-img" src="{{ \App\Support\SiteContent::url($story['image']) }}" alt="">@endif</div><p class="eyebrow">{{ $story['tag'] }}</p><h3>{{ $story['title'] }} <span>↗</span></h3><p class="muted">{{ $story['text'] }}</p></article>
         @endforeach
       </div>
     </section>

@@ -44,6 +44,7 @@ class ManageAboutPage extends ManagePageContent
                 TextInput::make('court_small')->label('Small label'),
                 Textarea::make('court_title')->label('Title')->rows(2),
                 TextInput::make('court_location')->label('Location'),
+                static::imageUpload('court_image', 'Banner photo')->columnSpanFull(),
             ]),
             Section::make('Story')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('story_eyebrow')->label('Eyebrow'),
@@ -66,6 +67,7 @@ class ManageAboutPage extends ManagePageContent
             Section::make('Collection')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('collection_eyebrow')->label('Eyebrow'),
                 TextInput::make('collection_button')->label('Button'),
+                static::imageUpload('collection_image', 'Collection photo')->columnSpanFull(),
                 Textarea::make('collection_title')->label('Title')->rows(2)->columnSpanFull(),
                 Repeater::make('collection_paragraphs')->label('Paragraphs')->columnSpanFull()->schema([
                     Textarea::make('text')->rows(3)->required(),

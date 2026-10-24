@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Support\SiteContent;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
@@ -34,6 +35,17 @@ abstract class ManagePageContent extends Page implements HasSchemas
 
     /** @return array<int, mixed> */
     abstract protected function fields(): array;
+
+    protected static function imageUpload(string $name, string $label = 'Image', ?string $hint = null): FileUpload
+    {
+        return FileUpload::make($name)
+            ->label($label)
+            ->image()
+            ->imageEditor()
+            ->maxSize(5120)
+            ->directory('site')
+            ->helperText($hint ?? 'Replaces the illustration. Remove the image to restore the original artwork.');
+    }
 
     public function save(): void
     {

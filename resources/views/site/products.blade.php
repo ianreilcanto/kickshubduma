@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('site/products/styles.css') }}">
+  <link rel="stylesheet" href="{{ asset('site/cms.css') }}">
 </head>
 <body>
   <div class="announcement">
@@ -39,9 +40,10 @@
         <h1>{!! nl2br(e($c['intro_title'])) !!}</h1>
         <p class="intro-subtitle">{!! nl2br(e($c['intro_subtitle'])) !!}</p>
       </div>
-      <div class="intro-art" aria-label="Editorial sneaker artwork">
+      <div @class(['intro-art', 'has-cms-image' => $c['intro_image']]) aria-label="Editorial sneaker artwork">
+        @if ($c['intro_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['intro_image']) }}" alt="">@endif
         <div class="art-stamp">LOCAL<br><strong>{{ $c['art_stamp_main'] }}</strong><br>SUPPLY</div>
-        <div class="shoe shoe-large"><span class="shoe-sole"></span><span class="shoe-upper"></span><span class="shoe-detail"></span><span class="shoe-laces"></span></div>
+        <div class="shoe shoe-large cms-hide"><span class="shoe-sole"></span><span class="shoe-upper"></span><span class="shoe-detail"></span><span class="shoe-laces"></span></div>
         <span class="art-note">{{ $c['art_note'] }}</span>
       </div>
     </section>
@@ -88,7 +90,7 @@
             $visual = match ($slug) { 'paddle' => 'visual-paddle', 'kits' => 'visual-kit', default => ['visual-red', 'visual-sand', 'visual-blue', 'visual-olive', 'visual-street'][$loop->index % 5] };
           @endphp
           <article class="product-card" data-name="{{ $product->name }}" data-category="{{ $slug }}" data-activity="{{ $product->activity }}" data-price="{{ (int) $product->price }}" data-sizes="{{ implode(',', $product->sizes ?? []) }}" data-order="{{ $loop->iteration }}">
-            <div class="product-visual {{ $visual }}">@if ($product->badge)<span class="product-badge">{{ $product->badge }}</span>@endif<button class="favorite" aria-label="Add {{ $product->name }} to favorites">♡</button>@if (! empty($product->images))<img src="{{ asset('storage/'.$product->images[0]) }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0">@elseif ($slug === 'paddle')<div class="paddle-art"><span></span></div>@elseif ($slug === 'kits')<div class="kit-art"><span class="kit-shirt"></span><span class="kit-shorts"></span></div>@else<div class="shoe product-shoe"><span class="shoe-sole"></span><span class="shoe-upper"></span><span class="shoe-detail"></span><span class="shoe-laces"></span></div>@endif<span class="visual-code">{{ $product->sku }}</span></div>
+            <div class="product-visual {{ $visual }}">@if ($product->badge)<span class="product-badge">{{ $product->badge }}</span>@endif<button class="favorite" aria-label="Add {{ $product->name }} to favorites">♡</button><img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0"><span class="visual-code">{{ $product->sku }}</span></div>
             <div class="product-meta"><div class="product-title-row"><h3>{{ $product->name }}</h3><strong>₱{{ number_format($product->price) }}</strong></div><p>{{ $product->description }}{{ $product->color ? ' · '.$product->color : '' }}</p><div class="product-bottom"><div class="swatches"><i class="navy"></i><i class="cream"></i></div><button class="quick-add">Quick add <span>＋</span></button></div></div>
           </article>
           @endforeach

@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('site/home/styles.css') }}">
+<link rel="stylesheet" href="{{ asset('site/cms.css') }}">
 </head>
 <body>
 <div class="announcement"><strong>{{ $c['announcement_title'] }}</strong><span>{{ $c['announcement_text'] }}</span></div>
@@ -30,7 +31,7 @@
     <p class="hero-note">{{ $c['hero_note'] }}</p>
   </div>
   <div class="hero-visual">
-    <div class="photo-placeholder hero-photo" role="img" aria-label="Editorial sneaker photograph"><div class="shoe-shape"></div><div class="photo-caption">{{ $c['hero_caption'] }}</div></div>
+    <div @class(['photo-placeholder', 'hero-photo', 'has-cms-image' => $c['hero_image']]) role="img" aria-label="Editorial sneaker photograph">@if ($c['hero_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['hero_image']) }}" alt="">@endif<div class="shoe-shape cms-hide"></div><div class="photo-caption">{{ $c['hero_caption'] }}</div></div>
     <div class="seal"><small>{{ $c['hero_seal_top'] }}</small><strong>{{ $c['hero_seal_main'] }}</strong><small>{{ $c['hero_seal_bottom'] }}</small></div>
     <div class="feature-caption"><div><b>{{ $c['feature_title'] }}</b><span>{{ $c['feature_text'] }}</span></div><a href="{{ route('products') }}" aria-label="View featured shoe">↗</a></div>
   </div>
@@ -45,7 +46,7 @@
   <div class="section-heading"><div><p class="eyebrow">{{ $c['categories_eyebrow'] }}</p><h2>{{ $c['categories_title'] }} <em>{{ $c['categories_highlight'] }}</em></h2></div><a class="text-link" href="{{ route('products') }}">{{ $c['categories_link'] }} ↗</a></div>
   <div class="category-grid">
     @foreach ($c['category_cards'] as $card)
-    <a class="category-card {{ ['cat-shoes', 'cat-court', 'cat-apparel'][$loop->index % 3] }}" href="{{ route('products') }}"><div class="category-art {{ ['sneaker-art', 'paddle-art', 'apparel-art'][$loop->index % 3] }}"></div><span>{{ $card['tag'] }}</span><h3>{!! nl2br(e($card['title'])) !!}</h3><b>{{ $card['cta'] }} ↗</b></a>
+    <a class="category-card {{ ['cat-shoes', 'cat-court', 'cat-apparel'][$loop->index % 3] }}" href="{{ route('products') }}"><div @class(['category-art', ['sneaker-art', 'paddle-art', 'apparel-art'][$loop->index % 3] => empty($card['image']), 'has-cms-image' => ! empty($card['image'])])>@if (! empty($card['image']))<img class="cms-img" src="{{ \App\Support\SiteContent::url($card['image']) }}" alt="">@endif</div><span>{{ $card['tag'] }}</span><h3>{!! nl2br(e($card['title'])) !!}</h3><b>{{ $card['cta'] }} ↗</b></a>
     @endforeach
   </div>
 </section>
@@ -57,15 +58,15 @@
       $slug = $product->category?->slug;
       $art = match ($slug) { 'paddle' => ['paddle', 'paddle-shape'], 'kits' => ['shirt', 'shirt-shape'], default => [$loop->odd ? 'red-shoe' : 'cream-shoe', 'sneaker'] };
     @endphp
-    <article class="product-card" data-category="{{ $slug }}"><div class="product-art {{ $art[0] }}">@if (! empty($product->images))<img src="{{ asset('storage/'.$product->images[0]) }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">@else<div class="{{ $art[1] }}"></div>@endif @if ($product->badge)<span class="tag">{{ $product->badge }}</span>@endif<button class="heart" aria-label="Add to favorites">♡</button></div><p class="product-type">{{ strtoupper($product->category?->name ?? 'Gear') }}{{ $product->activity ? ' / '.strtoupper($product->activity) : '' }}</p><h3>{{ $product->name }}{{ $product->color ? ' — '.$product->color : '' }}</h3><div class="product-bottom"><span>₱{{ number_format($product->price) }}</span><button class="add" data-product="{{ $product->name }}">+ ADD</button></div></article>
+    <article class="product-card" data-category="{{ $slug }}"><div class="product-art {{ $art[0] }}"><img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"> @if ($product->badge)<span class="tag">{{ $product->badge }}</span>@endif<button class="heart" aria-label="Add to favorites">♡</button></div><p class="product-type">{{ strtoupper($product->category?->name ?? 'Gear') }}{{ $product->activity ? ' / '.strtoupper($product->activity) : '' }}</p><h3>{{ $product->name }}{{ $product->color ? ' — '.$product->color : '' }}</h3><div class="product-bottom"><span>₱{{ number_format($product->price) }}</span><button class="add" data-product="{{ $product->name }}">+ ADD</button></div></article>
     @endforeach
   </div>
 </section>
 <section class="athlete-section" id="athletes">
-  <div class="athlete-visual"><div class="athlete-silhouette"></div><span class="vertical-label">{{ $c['athletes_label'] }}</span></div>
+  <div @class(['athlete-visual', 'has-cms-image' => $c['athletes_image']])>@if ($c['athletes_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['athletes_image']) }}" alt="">@endif<div class="athlete-silhouette cms-hide"></div><span class="vertical-label">{{ $c['athletes_label'] }}</span></div>
   <div class="athlete-copy"><p class="eyebrow">{{ $c['athletes_eyebrow'] }}</p><h2>{!! nl2br(e($c['athletes_title'])) !!} <em>{{ $c['athletes_highlight'] }}</em></h2><p>{{ $c['athletes_text'] }}</p><a class="btn primary" href="{{ route('athletes') }}">{{ $c['athletes_button'] }} ↗</a><div class="athlete-index">{{ $c['athletes_index'] }}</div></div>
 </section>
-<section class="section story" id="about"><div class="story-copy"><p class="eyebrow">{{ $c['story_eyebrow'] }}</p><h2>{{ $c['story_title'] }}<br><em>{{ $c['story_highlight'] }}</em></h2><p>{{ $c['story_text'] }}</p><a class="text-link" href="{{ route('about') }}">{{ $c['story_link'] }} ↗</a></div><div class="story-art"><div class="story-sun"></div><div class="story-court"></div><span>{{ $c['story_location'] }}</span></div></section>
+<section class="section story" id="about"><div class="story-copy"><p class="eyebrow">{{ $c['story_eyebrow'] }}</p><h2>{{ $c['story_title'] }}<br><em>{{ $c['story_highlight'] }}</em></h2><p>{{ $c['story_text'] }}</p><a class="text-link" href="{{ route('about') }}">{{ $c['story_link'] }} ↗</a></div><div @class(['story-art', 'has-cms-image' => $c['story_image']])>@if ($c['story_image'])<img class="cms-img" src="{{ \App\Support\SiteContent::url($c['story_image']) }}" alt="">@endif<div class="story-sun cms-hide"></div><div class="story-court cms-hide"></div><span>{{ $c['story_location'] }}</span></div></section>
 <section class="newsletter" id="newsletter"><div><p class="eyebrow">{{ $c['newsletter_eyebrow'] }}</p><h2>{{ $c['newsletter_title'] }} <em>{{ $c['newsletter_highlight'] }}</em></h2><p>{{ $c['newsletter_text'] }}</p></div><form id="newsletterForm"><label class="sr-only" for="email">Email address</label><input id="email" type="email" placeholder="Your email address" required><button type="submit">SIGN ME UP ↗</button><small id="newsletterMessage"></small></form></section>
 </main>
 <footer><a class="brand footer-brand" href="{{ route('home') }}"><div class="logo-mark"><span>KH</span><small>DUMA</small></div><div><b>KICKS HUB DUMA</b><small>YOUR LOCAL SPORTS CLUB</small></div></a><p>{{ $c['footer_tagline'] }}</p><div class="footer-links"><a href="{{ route('products') }}">Shop</a><a href="{{ route('about') }}">Our story</a><a href="{{ route('athletes') }}">Athletes</a><a href="#newsletter">Contact</a></div><small>{{ $c['footer_copyright'] }}</small></footer>

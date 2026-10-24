@@ -1,0 +1,3 @@
+.cms-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.has-cms-image::before,.has-cms-image::after,.has-cms-image>.cms-hide{display:none!important}
+.has-cms-image{background-image:none!important}

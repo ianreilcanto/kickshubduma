@@ -47,6 +47,7 @@ class ManageHomePage extends ManagePageContent
                 TextInput::make('hero_seal_bottom')->label('Seal: bottom'),
                 TextInput::make('feature_title')->label('Featured shoe title'),
                 TextInput::make('feature_text')->label('Featured shoe text'),
+                static::imageUpload('hero_image', 'Hero photo')->columnSpanFull(),
             ]),
             Section::make('Ribbon')->collapsible()->collapsed()->schema([
                 Repeater::make('ribbon')->label('Ribbon items')->schema([
@@ -69,6 +70,7 @@ class ManageHomePage extends ManagePageContent
                     TextInput::make('tag')->required(),
                     Textarea::make('title')->rows(2)->required(),
                     TextInput::make('cta')->label('Button text')->required(),
+                    static::imageUpload('image', 'Card image'),
                 ])->reorderable()->addActionLabel('Add card'),
             ]),
             Section::make('Products')->columns(2)->collapsible()->collapsed()->schema([
@@ -85,6 +87,7 @@ class ManageHomePage extends ManagePageContent
                 Textarea::make('athletes_text')->label('Text')->rows(3)->columnSpanFull(),
                 TextInput::make('athletes_button')->label('Button'),
                 TextInput::make('athletes_index')->label('Index label'),
+                static::imageUpload('athletes_image', 'Section photo')->columnSpanFull(),
             ]),
             Section::make('Story')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('story_eyebrow')->label('Eyebrow'),
@@ -93,6 +96,7 @@ class ManageHomePage extends ManagePageContent
                 TextInput::make('story_highlight')->label('Highlighted title (red)'),
                 Textarea::make('story_text')->label('Text')->rows(3)->columnSpanFull(),
                 TextInput::make('story_location')->label('Art caption'),
+                static::imageUpload('story_image', 'Story photo')->columnSpanFull(),
             ]),
             Section::make('Newsletter')->columns(2)->collapsible()->collapsed()->schema([
                 TextInput::make('newsletter_eyebrow')->label('Eyebrow'),

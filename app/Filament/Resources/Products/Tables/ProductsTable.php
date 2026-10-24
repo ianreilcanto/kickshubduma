@@ -20,7 +20,7 @@ class ProductsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('images')->circular()->stacked()->limit(3)->limitedRemainingText(),
+                ImageColumn::make('images')->circular()->stacked()->limit(3)->limitedRemainingText()->defaultImageUrl(asset('site/default-product.svg')),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('brand.name')->label('Brand')->sortable()->toggleable(),
                 TextColumn::make('category.name')->label('Category')->sortable()->toggleable(),

@@ -7,9 +7,21 @@ use Illuminate\Support\Facades\Schema;
 
 class SiteContent
 {
+    private static array $cache = [];
+
+    /** Public URL of an uploaded image path, or null when empty. */
+    public static function url(?string $path): ?string
+    {
+        return $path ? asset('storage/'.ltrim($path, '/')) : null;
+    }
+
     /** Stored content merged over the defaults; repeater lists are re-indexed. */
     public static function get(string $page): array
     {
+        if (isset(static::$cache[$page])) {
+            return static::$cache[$page];
+        }
+
         $stored = [];
 
         if (Schema::hasTable('site_pages')) {
@@ -21,12 +33,13 @@ class SiteContent
             fn ($value) => $value !== null && $value !== '',
         ));
 
-        return array_map(fn ($value) => is_array($value) ? array_values($value) : $value, $content);
+        return static::$cache[$page] = array_map(fn ($value) => is_array($value) ? array_values($value) : $value, $content);
     }
 
     public static function save(string $page, array $data): void
     {
         SitePage::updateOrCreate(['page' => $page], ['content' => $data]);
+        unset(static::$cache[$page]);
     }
 
     public static function defaults(string $page): array
@@ -50,6 +63,8 @@ class SiteContent
             'intro_subtitle' => "Fresh pairs. Better rallies. Your next go-to kit.\nConsidered gear for every version of your game.",
             'art_stamp_main' => 'GAME',
             'art_note' => 'COURT / STREET / EVERYDAY',
+            'intro_image' => null,
+            'default_product_image' => null,
             'filter_note_title' => 'Made for your game.',
             'filter_note_text' => 'Need help with fit or gear? Our local crew can help you find your pair.',
             'catalogue_footer' => 'Showing a curated edit of the Kicks Hub Duma store',
@@ -74,6 +89,8 @@ class SiteContent
             'intro_text' => 'Not just podiums and personal bests. We celebrate the people who lace up, show up, and bring a little more heart to the game.',
             'intro_link' => 'MEET THE DUMA CREW',
             'disclosure' => 'CONCEPT ROSTER — Fictional athletes and original portraits, created to tell our story. No real-world endorsements.',
+            'spotlight_image' => null,
+            'kit_image' => null,
             'show_disclosure' => true,
             'crew_eyebrow' => 'OUR ATHLETES / OUR EVERYDAY INSPIRATION',
             'crew_title' => 'GOOD COMPANY. GREAT ENERGY.',
@@ -193,6 +210,9 @@ class SiteContent
             'newsletter_title' => 'GOOD NEWS.',
             'newsletter_highlight' => 'NO NOISE.',
             'newsletter_text' => 'New drops, local events and community stories — straight to your inbox.',
+            'hero_image' => null,
+            'athletes_image' => null,
+            'story_image' => null,
             'footer_tagline' => 'GOOD KICKS. REAL GAME. LOCAL SOUL.',
             'footer_copyright' => '© 2026 Kicks Hub Duma. Made for the love of the game.',
         ];
@@ -211,6 +231,8 @@ class SiteContent
             'court_small' => 'DUMA / COMMUNITY COURT',
             'court_title' => "THE GAME IS BETTER\nTOGETHER.",
             'court_location' => 'DUMAGUETE / NEGROS ORIENTAL / PH',
+            'court_image' => null,
+            'collection_image' => null,
             'story_eyebrow' => 'THE IDEA BEHIND THE HUB',
             'story_title' => "LESS HYPE.\nMORE HEART.\nALWAYS GAME.",
             'story_heading' => 'Some people see a pair of shoes. We see the games, places and people that come with them.',
